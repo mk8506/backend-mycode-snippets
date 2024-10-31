@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="departmentMapper">
+
+ <!--type: model(beans) path (class name), id: name to it (object) -->
+ <resultMap type="kr.minj.model.Department" id="department">
+  <!-- fields of Beans and column of the table-->
+  <result property="deptno" column="deptno" />
+  <result property="dname" column="dname" />
+  <result property="loc" column="loc" />
+ </resultMap>
+
+ <!-- saves data -->
+ <insert id="insert"
+  parameterType="kr.minj.model.Department"
+  useGeneratedKeys="true"
+  keyProperty="deptno">
+    insert into department (dname, loc) values (#{dname}, #{loc});
+ </insert>
+ <!-- delete -->
+ <delete id="delete"
+  parameterType="kr.minj.model.Department">
+    delete from department where deptno=#{deptno};
+ </delete>
+ <!-- update -->
+ <update id="update"
+  parameterType="kr.minj.model.Department">
+    update department set dname=#{dname}, loc=#{loc} where deptno=#{deptno};
+ </update>
+ <!-- only one search -->
+ <select id="selectItem"
+  parameterType="kr.minj.model.Department"
+  resultMap="department">
+    select deptno, dname, loc from department where deptno=#{deptno};
+ </select>
+ <!-- multiple lines search -->
+ <select id="selectList"
+  resultMap="department">
+    select deptno, dname, loc from department;
+ </select>
+</mapper>
